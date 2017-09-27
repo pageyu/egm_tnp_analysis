@@ -2,19 +2,34 @@ void TreeFiller() {
 //TFile f("PileUpHisto.root");
 //TH1F *h = (TH1F*)f.Get("j1_1");
 
-TFile f("CutBasedID_TightWP_76X_forHWW_Final.txt_SF2D.root");
+TFile f("egammaEffi.txt_EGM2D.root");
+//TFile f("CutBasedID_TightWP_76X_forHWW_Final.txt_SF2D.root");
 TH2F *h = (TH2F*)f.Get("EGamma_SF2D");
  
 //TFile f1("DY_MG_25ns_4Nov.root");
-TFile f1("/tmp/arun/eos/cms/store/group/phys_higgs/cmshww/arun/SingleEle_ReReco_76X/SingleElectron/crab_SingleEle_ReReco_76X/160202_171225/0000/Data_2015_SingleEle_76X.root");
+//TFile f1("/wk_cms2/pchen/work/HWAnalysis/data/eos/cms/store/group/phys_egamma/tnp/80X/PhoEleIDs/Moriond17_v1/mc/TnPTree_DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_DYToLL_madgraph_Moriond17.root");
+//TFile f1("/tmp/arun/eos/cms/store/group/phys_higgs/cmshww/arun/SingleEle_ReReco_76X/SingleElectron/crab_SingleEle_ReReco_76X/160202_171225/0000/Data_2015_SingleEle_76X.root");
 //TFile f1("/tmp/arun/eos/cms/store/group/phys_higgs/cmshww/arun/DYLL_Poweheg_76X_17Feb/DYToEE_NNPDF30_13TeV-powheg-pythia8/crab_DYLL_Powheg_76X_17Feb/160217_102744/0000/DYLL_76X_Powheg_17Feb.root");
-TTree *T1 = (TTree*)f1.Get("GsfElectronToRECO/fitter_tree");
+//TTree *T1 = (TTree*)f1.Get("GsfElectronToEleID/fitter_tree");
 
-TFile *file = new TFile("SingleEle_2015D_76X.root","RECREATE");
+
+TChain * T1 = new TChain("GsfElectronToEleID/fitter_tree");
+T1->Add("/wk_cms2/pchen/work/HWAnalysis/data/eoscms/cms/store/group/phys_egamma/tnp/80X/PhoEleIDs/Moriond17_v1/data/TnPTree_SingleElectron_2016rereco_RunB.root");
+T1->Add("/wk_cms2/pchen/work/HWAnalysis/data/eoscms/cms/store/group/phys_egamma/tnp/80X/PhoEleIDs/Moriond17_v1/data/TnPTree_SingleElectron_2016rereco_RunC.root");
+T1->Add("/wk_cms2/pchen/work/HWAnalysis/data/eoscms/cms/store/group/phys_egamma/tnp/80X/PhoEleIDs/Moriond17_v1/data/TnPTree_SingleElectron_2016rereco_RunD.root");
+T1->Add("/wk_cms2/pchen/work/HWAnalysis/data/eoscms/cms/store/group/phys_egamma/tnp/80X/PhoEleIDs/Moriond17_v1/data/TnPTree_SingleElectron_2016rereco_RunE.root");
+T1->Add("/wk_cms2/pchen/work/HWAnalysis/data/eoscms/cms/store/group/phys_egamma/tnp/80X/PhoEleIDs/Moriond17_v1/data/TnPTree_SingleElectron_2016rereco_RunF.root");
+T1->Add("/wk_cms2/pchen/work/HWAnalysis/data/eoscms/cms/store/group/phys_egamma/tnp/80X/PhoEleIDs/Moriond17_v1/data/TnPTree_SingleElectron_2016rereco_RunG.root");
+T1->Add("/wk_cms2/pchen/work/HWAnalysis/data/eoscms/cms/store/group/phys_egamma/tnp/80X/PhoEleIDs/Moriond17_v1/data/TnPTree_SingleElectron_2016prompt_RunH.root");
+
+
+///wk_cms2/pchen/work/HWAnalysis/data/eoscms/cms/store/group/phys_egamma/tnp/80X/PhoEleIDs/Moriond17_v1/data
+
+TFile *file = new TFile("SingleEle_Full2016_80X.root","RECREATE");
 //TFile *file = new TFile("DY_Powheg_76X.root","RECREATE");
 TTree *rhoTree = new TTree("rhoTree"," after preselections tree");
 
- 
+
  int event_nPV;
  float event_rho;
  float pair_mass;
@@ -74,7 +89,7 @@ float tag_trkIso;
 float tag_ecalIso;
 float tag_hcalIso; 
 
- 
+T1->Print(); 
 T1->SetBranchAddress("event_nPV", &event_nPV);
 T1->SetBranchAddress("event_rho", &event_rho);
 T1->SetBranchAddress("passingTight", &passingTight);
