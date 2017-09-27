@@ -1,19 +1,13 @@
-#!bin/bash 
+#!/usr/bin/env bash
 
-if [[ `uname -n` == *"lxplus"* ]]; then 
-## install gcc 4.9
-    optVer=x86_64-slc6-gcc49-opt
-    optVer=x86_64-slc6-gcc48-opt
-
-## install modern version of ROOT
-    LCG=/afs/cern.ch/sw/lcg/
-    ROOTSYS=$LCG/app/releases/ROOT/6.06.06/$optVer/root/
-    . $LCG/external/gcc/4.8.0/$optVer/setup.sh
-    . $ROOTSYS/bin/thisroot.sh
-
-## add python lib
-    . /opt/rh/python27/enable
-    export LD_LIBRARY_PATH=/opt/rh/python27/root/usr/lib64/:$LD_LIBRARY_PATH
-fi
-
-export PYTHONPATH=.:$PYTHONPATH
+optVer=x86_64-slc6-gcc48-opt
+LCG="/cvmfs/sft.cern.ch/lcg"
+ROOTSYS=${LCG}/app/releases/ROOT/6.06.06/${optVer}/root/
+. ${LCG}/external/gcc/4.8.1/${optVer}/setup.sh
+. ${ROOTSYS}/bin/thisroot.sh
+ 
+#. /opt/rh/python27/enable
+export PYTHONPREFIX="${LCG}/external/Python/2.7.4/x86_64-slc6-gcc48-opt"
+export PATH="${PYTHONPREFIX}/bin:${PATH}"
+export LD_LIBRARY_PATH="${PYTHONPREFIX}/lib:${LD_LIBRARY_PATH}"
+export PYTHONPATH=.:${PYTHONPATH}
