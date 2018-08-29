@@ -25,10 +25,10 @@ import etc.inputs.tnpSampleDef as tnpSamples
 tnpTreeDir = 'GsfElectronToEleID'
 
 samplesDef = {
-    'data'   : tnpSamples.ICHEP2016['data_2016_runC_ele'].clone(),
-    'mcNom'  : tnpSamples.ICHEP2016['mc_DY_madgraph_ele'].clone(),
-    'mcAlt'  : tnpSamples.ICHEP2016['mc_DY_amcatnlo_ele'].clone(),
-    'tagSel' : tnpSamples.ICHEP2016['mc_DY_madgraph_ele'].clone(),
+    'data'   : tnpSamples.Moriond18_94X['data_Run2017B'].clone(),
+    'mcNom'  : tnpSamples.Moriond18_94X['DY_madgraph'].clone(),
+    'mcAlt'  : tnpSamples.Moriond18_94X['DY_amcatnlo_Moriond18'].clone(),
+    'tagSel' : tnpSamples.Moriond18_94X['DY_madgraph_Moriond18'].clone(),
 }
 ## can add data sample easily
 #samplesDef['data'].add_sample( tnpSamples.ICHEP2016['data_2016_runC_ele'] )

@@ -89,6 +89,9 @@ for s in tnpConf.samplesDef.keys():
 
 
 if args.createHists:
+
+    import libPython.histUtils as tnpHist
+
     for sampleType in tnpConf.samplesDef.keys():
         sample =  tnpConf.samplesDef[sampleType]
         if sample is None : continue
@@ -98,7 +101,7 @@ if args.createHists:
             var = { 'name' : 'pair_mass', 'nbins' : 80, 'min' : 50, 'max': 130 }
             if sample.mcTruth:
                 var = { 'name' : 'pair_mass', 'nbins' : 80, 'min' : 50, 'max': 130 }
-            tnpRoot.makePassFailHistograms( sample, tnpConf.flags[args.flag], tnpBins, var )
+            tnpHist.makePassFailHistograms( sample, tnpConf.flags[args.flag], tnpBins, var )
 
     sys.exit(0)
 

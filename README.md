@@ -1,27 +1,51 @@
 # egm_tnp_analysis
 
+## General note on installation
+
+This code can in principle run on your laptop but you need ROOT 6.10 or higher and RooFit installed to use some advanced features when creating histograms.
+The easiest thing to do is to set the environement in a 9_4_X release:
+
+>cmsrel CMSSW_9_4_0
+
+>cd CMSSW_9_4_0/src
+
+>cmsenv
+
 
 ## Install stable branch
 
-> git clone -b egm_tnp_Moriond17_v2.0 git@github.com:fcouderc/egm_tnp_analysis.git 
+>git clone -b egm_tnp_Moriond18_v3.0 git@github.com:michelif/egm_tnp_analysis.git
 
+if you  want to run the old tnp code which runs also with ROOT < 6.10 you can get this branch: 
+
+>git clone -b egm_tnp_Moriond18_v2.0 git@github.com:lsoffi/egm_tnp_analysis.git
+
+On lxplus you need to setup the environment: 
 > cd egm_tnp_analysis
 
-no compilation is required (this will auto compile the C++ code automatically) but you need ROOT and RooFit installed.
+> source etc/scripts/setup94.sh
 
-This can be run on a laptop, does not require cmssw environment (still requires the setup to be run)
+or if you got the branch for ROOT < 6.10:
+
+> source etc/scripts/setup.sh
+
+Compile with:
+
+>make
+
+The compile step is not needed for the branch for ROOT < 6.10:
+
 
 ## Quick description
-
-First you need to setup the environment, especially on lxplus (do not use cmsenv from cmssw)
-
-> source etc/scritps/setup.sh
-
 Package to handle analysis of tnp trees. The main tool is the python fitter
 
    ===> tnpEGM_fitter.py
 
-The interface between the user and the fitter is solely done via the settings file
+The interface between the user and the fitter is solely done via the settings file.
+
+**IMPORTANT**
+In the following we refer to this file as "settings.py",
+anyway that is just a template file. you should run "settings_ele.py", or "settings_pho.py", or edit them according to your needs.
 
    ===> etc/config/settings.py
    	- set the flags (i.e. Working points) that can be tested
@@ -134,6 +158,29 @@ to the fitter. One can handle complex flags with a cut string (root cut string):
 
 ====================
    
+
+
+##  Update PU weights 
+
+1. Pileup files have to be computed with: python etc/scripts/pureweight.py
+
+Here one has to update the name of the directory whre the files will be located and the corresponding names.
+
+
+2.This pyhton uses the following: libPython/puReweighter.py.
+
+Here one nees to add the PU MC mix numbers that are available here: http://cmslxr.fnal.gov/source/SimGeneral/MixingModule/python/?v=CMSSW_9_4_0
+
+
+3.The data PU distrubtions can be computed using the following instructions (similar to what is done in step1):
+
+pileupCalc.py -i /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/PromptReco/Cert_294927-306462_13TeV_PromptReco_Collisions17_JSON.txt --inputLumiJSON /afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/PileUp/pileup_latest.txt --calcMode true --minBiasXsec 69200 --maxPileupBin 100 --numPileupBins 100 pileup_2017_41fb.root
+
+
+The nvtx and rho histos are not needed because we will use the pu method (type = 0) for the reweight.
+
+NB: Before using these py in order to load the needed libraires one has to run: 
+export  PYTHONPATH=$PYTHONPATH:/afs/cern.ch/user/s/soffi/scratch0/TEST/CMSSW-10-0-0-pre3/src/egm_tnp_analysis 
 
 
 #### adding remote (Fabrice version)
